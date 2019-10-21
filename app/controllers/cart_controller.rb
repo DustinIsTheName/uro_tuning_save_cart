@@ -12,4 +12,7 @@ class CartController < ApplicationController
     render json: params
   end
 
+  def home
+  end
+
 end

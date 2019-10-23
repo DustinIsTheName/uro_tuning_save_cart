@@ -19,7 +19,7 @@ class CartMailer < ApplicationMailer
       puts @items[i.to_s]["image"]
     end
 
-    mail(to: email, from: 'no-reply@urotuning.com', subject: 'Your Saved Cart')
+    mail(to: email, from: 'support@urotuning.com', subject: 'Your Saved Cart')
   end
 
 end

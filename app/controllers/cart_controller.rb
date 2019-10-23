@@ -7,7 +7,7 @@ class CartController < ApplicationController
     puts params
 
     CartData.send_email(params)
-    CartData.send_to_omnisend
+    CartData.send_to_omnisend(params["email"])
 
     render json: params
   end

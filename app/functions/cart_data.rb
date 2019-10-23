@@ -4,10 +4,10 @@ class CartData
     CartMailer.save_cart_email(params).deliver
   end
 
-  def self.send_to_omnisend
+  def self.send_to_omnisend(email)
     puts "test again"
     url = URI('https://api.omnisend.com/v3/contacts')
-    contact_data = {"email" => 'email@example2.com', "status" => "unsubscribed", "statusDate" => Time.now}
+    contact_data = {"email" => email, "status" => "unsubscribed", "statusDate" => Time.now}
     http_request url, contact_data, 'post'
   end
 

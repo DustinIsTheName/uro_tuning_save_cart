@@ -24,6 +24,22 @@ Rails.application.configure do
 
   # Do not fallback to assets pipeline if a precompiled asset is missed.
   config.assets.compile = false
+  # config.action_mailer.delivery_method = :ses
+
+  config.action_mailer.raise_delivery_errors = true
+
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    :address              => "email-smtp.us-east-1.amazonaws.com",
+    :port                 => 587,
+    :domain               => 'saveyourcart.urotuning.com',
+    :user_name            => ENV["SES_SMTP_USERNAME"],
+    :password             => ENV["SES_SMTP_PASSWORD"],
+    :authentication       => 'plain',
+    :enable_starttls_auto => true
+  }
+
+  config.action_mailer.default_url_options = { host: 'https://saveyourcart.urotuning.com', port: 80 }
 
   # `config.assets.precompile` and `config.assets.version` have moved to config/initializers/assets.rb
 

@@ -5,7 +5,7 @@
     
 
   
-  <title>Here is your cart!</title>
+  <title>Here is your saved cart!</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <meta name="viewport" content="width=device-width">
   
@@ -122,19 +122,23 @@ color: #f62f2f;
 
           <table class="row content" style="width: 100%; border-spacing: 0; border-collapse: collapse;">
   <tbody><tr>
-    <td class="content__cell" style="font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;Roboto&quot;, &quot;Oxygen&quot;, &quot;Ubuntu&quot;, &quot;Cantarell&quot;, &quot;Fira Sans&quot;, &quot;Droid Sans&quot;, &quot;Helvetica Neue&quot;, sans-serif; padding-bottom: 40px;">
+    <td class="content__cell" style="font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;Roboto&quot;, &quot;Oxygen&quot;, &quot;Ubuntu&quot;, &quot;Cantarell&quot;, &quot;Fira Sans&quot;, &quot;Droid Sans&quot;, &quot;Helvetica Neue&quot;, sans-serif; padding-bottom: 0;">
       <center>
         <table class="container" style="width: 560px; text-align: left; border-spacing: 0; border-collapse: collapse; margin: 0 auto;">
           <tbody><tr>
             <td style="font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;Roboto&quot;, &quot;Oxygen&quot;, &quot;Ubuntu&quot;, &quot;Cantarell&quot;, &quot;Fira Sans&quot;, &quot;Droid Sans&quot;, &quot;Helvetica Neue&quot;, sans-serif;">
               
-            <h2 style="font-weight: normal; font-size: 24px; margin: 0 0 10px;">Here is your cart!</h2>
+            <h2 style="font-weight: normal; font-size: 24px; margin: 0 0 10px;">Here is your saved cart!</h2>
             <p style="color: #777; line-height: 150%; font-size: 16px; margin: 0;">
   
 </p>
             
 
-
+              <table class="row actions" style="width: 100%;">
+  <tr>
+    <td class="empty-line"> </td>
+  </tr>
+</table>
             
 
             </td>
@@ -145,17 +149,10 @@ color: #f62f2f;
   </tr>
 </tbody></table>
 
-          <table class="row section" style="width: 100%; border-spacing: 0; border-collapse: collapse; border-top-width: 1px; border-top-color: #e5e5e5; border-top-style: solid;">
+          <table class="row section" style="width: 100%; border-spacing: 0; border-collapse: collapse; border-top-width: 0; border-top-color: #e5e5e5; border-top-style: solid;">
   <tbody><tr>
     <td class="section__cell" style="font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;Roboto&quot;, &quot;Oxygen&quot;, &quot;Ubuntu&quot;, &quot;Cantarell&quot;, &quot;Fira Sans&quot;, &quot;Droid Sans&quot;, &quot;Helvetica Neue&quot;, sans-serif; padding: 40px 0;">
       <center>
-        <table class="container" style="width: 560px; text-align: left; border-spacing: 0; border-collapse: collapse; margin: 0 auto;">
-          <tbody><tr>
-            <td style="font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;Roboto&quot;, &quot;Oxygen&quot;, &quot;Ubuntu&quot;, &quot;Cantarell&quot;, &quot;Fira Sans&quot;, &quot;Droid Sans&quot;, &quot;Helvetica Neue&quot;, sans-serif;">
-              <h3 style="font-weight: normal; font-size: 20px; margin: 0 0 25px;">Saved Cart</h3>
-            </td>
-          </tr>
-        </tbody></table>
         <table class="container" style="width: 560px; text-align: left; border-spacing: 0; border-collapse: collapse; margin: 0 auto;">
           <tbody><tr>
             <td style="font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;Roboto&quot;, &quot;Oxygen&quot;, &quot;Ubuntu&quot;, &quot;Cantarell&quot;, &quot;Fira Sans&quot;, &quot;Droid Sans&quot;, &quot;Helvetica Neue&quot;, sans-serif;">
@@ -165,7 +162,7 @@ color: #f62f2f;
   
   <tbody>
 
-<!-- <%= @items %> -->
+<!-- id:2019-10-29-21:48:38:284t -->
 
   <% for i in 0..@items.length - 1 %>
   <% item = @items[i.to_s] %>
@@ -196,11 +193,13 @@ color: #f62f2f;
             
             <p class="order-list__item-price" style="color: #555; line-height: 150%; font-size: 16px; font-weight: 600; margin: 0 0 0 15px;" align="right">
               
-                $<%= item["final_line_price"].to_f/100 %>
+                $<%= '%.2f' % (item["final_line_price"].to_f/100) %>
               
             </p>
           </td>
-      </tr></tbody></table>
+      </tr>
+
+    </tbody></table>
     </td>
   </tr>
 
@@ -227,7 +226,7 @@ color: #f62f2f;
     </p>
   </td>
   <td class="subtotal-line__value" style="font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;Roboto&quot;, &quot;Oxygen&quot;, &quot;Ubuntu&quot;, &quot;Cantarell&quot;, &quot;Fira Sans&quot;, &quot;Droid Sans&quot;, &quot;Helvetica Neue&quot;, sans-serif; padding: 5px 0;" align="right">
-    <strong style="font-size: 16px; color: #555;">$<%= @cart["items_subtotal_price"].to_f/100 %></strong>
+    <strong style="font-size: 16px; color: #555;">$<%= '%.2f' % (@cart["items_subtotal_price"].to_f/100) %></strong>
   </td>
 </tr>
        
@@ -241,11 +240,24 @@ color: #f62f2f;
       
     </td>
   </tr>
+
 </tbody></table>
 
 
             </td>
           </tr>
+          <tr>
+          <td class="actions__cell">
+            <table class="button main-action-cell" style="width: 100%;padding-top: 40px;">
+              <tr>
+                <td class="button__cell">
+                  <a href="https://www.urotuning.com/pages/save-cart?<%= @save_cart_url_params %>" class="button__text" style="font-size: 16px;text-decoration: none;display: block;color: #fff;padding: 20px 25px;border-radius: 5px;background:#f62e2e;text-align: center;">View your cart and checkout</a>
+                </td>
+              </tr>
+            </table>
+
+          </td>
+        </tr>
         </tbody></table>
       </center>
     </td>
@@ -261,6 +273,7 @@ color: #f62f2f;
             <td style="font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;Roboto&quot;, &quot;Oxygen&quot;, &quot;Ubuntu&quot;, &quot;Cantarell&quot;, &quot;Fira Sans&quot;, &quot;Droid Sans&quot;, &quot;Helvetica Neue&quot;, sans-serif;">
               
               <p class="disclaimer__subtext" style="color: #999; line-height: 150%; font-size: 14px; margin: 0;">If you have any questions, reply to this email or contact us at <a href="mailto:support@urotuning.com" style="font-size: 14px; text-decoration: none; color: #f62f2f;">support@urotuning.com</a></p>
+              <p class="disclaimer__subtext" style="color: #999; line-height: 150%; font-size: 14px; margin: 0;text-align:center;">To unsubscribe <%= link_to "click here", unsubscribe_url(email: @email) %></p>
             </td>
           </tr>
         </tbody></table>

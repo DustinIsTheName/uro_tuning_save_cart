@@ -7,6 +7,13 @@ class CartData
   def self.send_to_omnisend(email)
     puts "test again"
     url = URI('https://api.omnisend.com/v3/contacts')
+    contact_data = {"email" => email, "status" => "subscribed", "statusDate" => Time.now}
+    http_request url, contact_data, 'post'
+  end
+
+  def self.unsubscribe_from_omnisend(email)
+    puts "unsubscribe"
+    url = URI('https://api.omnisend.com/v3/contacts')
     contact_data = {"email" => email, "status" => "unsubscribed", "statusDate" => Time.now}
     http_request url, contact_data, 'post'
   end

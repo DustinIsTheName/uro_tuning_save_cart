@@ -1,0 +1,2 @@
+class ShopifyOrder < ApplicationRecord
+end

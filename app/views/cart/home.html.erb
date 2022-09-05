@@ -1,1 +1,16 @@
 PLACEHOLDER HOME PAGE
+<br>
+<button id="sync-orders">Sync</button>
+<script type="text/javascript">
+  (function () {
+    $('#sync-orders').click(function() {
+      $.ajax({
+        type: 'GET',
+        url: '/sync-orders',
+        success: function(response) {
+          console.log('eeeek', response);
+        }
+      });
+    });
+  })();
+</script>

@@ -7,6 +7,10 @@ Rails.application.routes.draw do
   post '/bounce' => 'cart#bounce'
   post '/complaint' => 'cart#complaint'
 
+  post '/new-order' => "order#new_order"
+  get '/get-order' => "order#fetch_order"
+  get '/sync-orders' => "order#sync_orders"
+
   root to: 'cart#home'
 
 end

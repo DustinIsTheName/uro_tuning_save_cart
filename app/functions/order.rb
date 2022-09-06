@@ -32,10 +32,10 @@ class Order
         if order.save
           Colorize.green "saved order #{order.number}; page: #{@page_count}/#{@total_pages} order: #{@order_count}/#{@total_orders}"
         else
-          puts Colorize.red "#{order.error}; page: #{@page_count} order: #{@order_count}"
+          puts Colorize.red "#{order.error}; page: #{@page_count}/#{@total_pages} order: #{@order_count}/#{@total_orders}"
         end
       else
-        puts Colorize.cyan "#{order.number} already exists; page: #{@page_count} order: #{@order_count}"
+        puts Colorize.cyan "#{order.number} already exists; page: #{@page_count}/#{@total_pages} order: #{@order_count}/#{@total_orders}"
       end
     end
   end

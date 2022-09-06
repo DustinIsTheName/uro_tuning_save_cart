@@ -4,6 +4,9 @@ class Order
     
     all_orders = ShopifyAPI::Order.find(:all, params: { fulfillment_status: 'any', limit: 250 })
 
+    @total_orders = ShopifyAPI::Order.count
+    @total_pages = (@total_orders / 250.0).ceil
+
     @page_count = 0
     @order_count = 0
     create_orders(all_orders)
@@ -27,7 +30,7 @@ class Order
         order.shopify_id = shopify_order.id
         order.order_status_url = shopify_order.order_status_url
         if order.save
-          Colorize.green "saved order #{order.number}; page: #{@page_count} order: #{@order_count}"
+          Colorize.green "saved order #{order.number}; page: #{@page_count}/#{@total_pages} order: #{@order_count}/#{@total_orders}"
         else
           puts Colorize.red "#{order.error}; page: #{@page_count} order: #{@order_count}"
         end

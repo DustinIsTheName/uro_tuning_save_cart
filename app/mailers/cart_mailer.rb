@@ -3,12 +3,13 @@ class CartMailer < ApplicationMailer
   default to: 'dustin@wittycreative.com'
 
   def save_cart_email(params)
-    @cart = params["cart"]
+    unsafe_params = params.to_unsafe_h
+    @cart = unsafe_params["cart"]
     @items = @cart["items"]
     trimmed_items = {"items" => {}}
 
-    if params["email"]
-      @email = params["email"]
+    if unsafe_params["email"]
+      @email = unsafe_params["email"]
     else
       @email = 'dustin@wittycreative.com'
     end
@@ -21,7 +22,7 @@ class CartMailer < ApplicationMailer
       trimmed_items["items"][i.to_s] = {
         id: @items[i.to_s]["id"],
         quantity: @items[i.to_s]["quantity"],
-        properties: @items[i.to_s]["properties"]&.to_unsafe_h
+        properties: @items[i.to_s]["properties"]
       }
     end
 

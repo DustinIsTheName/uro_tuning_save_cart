@@ -5,15 +5,21 @@ class OrderController < ApplicationController
   def new_order
     puts params
 
-    order = ShopifyOrder.new
+    is_presant = ShopifyOrder.find_by_number params["number"]
+    if is_presant
+      puts Colorize.cyan "#{params["number"]} Already exists"
+    else
+      order = ShopifyOrder.new
 
-    order.email = params["email"]
-    order.number = params["number"]
-    order.shopify_id = params["id"]
-    order.order_status_url = params["order_status_url"]
-    order.save
+      order.email = params["email"]
+      order.number = params["number"]
+      order.shopify_id = params["id"]
+      order.order_status_url = params["order_status_url"]
+      order.save
+      puts Colorize.gree "#{params["number"]} saved"
+    end
 
-    render nothing: true, status: 200
+    head :ok
   end
 
   def fetch_order

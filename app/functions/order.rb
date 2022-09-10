@@ -30,7 +30,7 @@ class Order
         order.shopify_id = shopify_order.id
         order.order_status_url = shopify_order.order_status_url
         if order.save
-          Colorize.green "saved order #{order.number}; page: #{@page_count}/#{@total_pages} order: #{@order_count}/#{@total_orders}"
+          puts Colorize.green "saved order #{order.number}; page: #{@page_count}/#{@total_pages} order: #{@order_count}/#{@total_orders}"
         else
           puts Colorize.red "#{order.error}; page: #{@page_count}/#{@total_pages} order: #{@order_count}/#{@total_orders}"
         end

@@ -5,6 +5,8 @@ class CartMailer < ApplicationMailer
   def save_cart_email(params)
     unless params.class == Hash
       unsafe_params = params.to_unsafe_h
+    else
+      unsafe_params = params
     end
     @cart = unsafe_params["cart"]
     @items = @cart["items"]

@@ -3,7 +3,9 @@ class CartMailer < ApplicationMailer
   default to: 'dustin@wittycreative.com'
 
   def save_cart_email(params)
-    unsafe_params = params.to_unsafe_h
+    unless params.class == Hash
+      unsafe_params = params.to_unsafe_h
+    end
     @cart = unsafe_params["cart"]
     @items = @cart["items"]
     trimmed_items = {"items" => {}}

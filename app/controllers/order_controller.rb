@@ -16,7 +16,7 @@ class OrderController < ApplicationController
       order.shopify_id = params["id"]
       order.order_status_url = params["order_status_url"]
       order.save
-      puts Colorize.gree "#{params["number"]} saved"
+      puts Colorize.green "#{params["number"]} saved"
     end
 
     head :ok

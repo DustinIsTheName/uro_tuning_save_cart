@@ -17,6 +17,9 @@ module UroTuningSaveCart
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
     config.hosts << "35ac-98-169-39-240.ngrok.io"
+    config.hosts << "urotuning.herokuapp.com"
+    config.hosts << "saveyourcart.urotuning.com"
+    
     ShopifyAPI::Base.site = "https://#{ENV["SHOPIFY_API_KEY"]}:#{ENV["SHOPIFY_PASSWORD"]}@shopurotuning.myshopify.com/admin"
     ShopifyAPI::Base.api_version = '2021-01'
   end

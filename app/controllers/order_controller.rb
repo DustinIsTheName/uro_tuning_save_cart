@@ -30,7 +30,9 @@ class OrderController < ApplicationController
 
     order_status_url = false
     if order
-      order_status_url = order.order_status_url
+      if order.email == params["order_email"]
+        order_status_url = order.order_status_url
+      end
     end
 
     render json: {order_status_url: order_status_url}

@@ -10,8 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_08_19_170401) do
-
+ActiveRecord::Schema[7.0].define(version: 2022_09_12_233919) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -20,8 +19,10 @@ ActiveRecord::Schema.define(version: 2022_08_19_170401) do
     t.string "number"
     t.string "shopify_id"
     t.string "order_status_url"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.string "zip"
+    t.string "phone"
     t.index ["number"], name: "index_shopify_orders_on_number", unique: true
   end
 

@@ -12,6 +12,8 @@ class OrderController < ApplicationController
       order = ShopifyOrder.new
 
       order.email = params["email"]
+      order.phone = params["customer"]["default_address"]["phone"]&.gsub(/[\s\(\)\-\+]/, "")
+      order.zip = params["customer"]["default_address"]["zip"]
       order.number = params["number"]
       order.shopify_id = params["id"]
       order.order_status_url = params["order_status_url"]
@@ -30,7 +32,10 @@ class OrderController < ApplicationController
 
     order_status_url = false
     if order
-      if order.email == params["order_email"]
+      puts order.email
+      puts order.zip
+      puts order.phone
+      if order.email == params["order_email"] or order.zip == params["order_email"] or order.phone == params["order_email"]&.gsub(/[\s\(\)\-\+]/, "")
         order_status_url = order.order_status_url
       end
     end

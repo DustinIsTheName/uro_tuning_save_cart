@@ -36,12 +36,12 @@ class Order
         order.shopify_id = shopify_order.id
         order.order_status_url = shopify_order.order_status_url
         if order.save
-          puts Colorize.green "saved order #{order.name}; page: #{@page_count}/#{@total_pages} order: #{@order_count}/#{@total_orders}"
+          puts Colorize.green "saved order #{order.number}; page: #{@page_count}/#{@total_pages} order: #{@order_count}/#{@total_orders}"
         else
           puts Colorize.red "#{order.error}; page: #{@page_count}/#{@total_pages} order: #{@order_count}/#{@total_orders}"
         end
       else
-        puts Colorize.cyan "#{order.name} already exists; page: #{@page_count}/#{@total_pages} order: #{@order_count}/#{@total_orders}"
+        puts Colorize.cyan "#{order.number} already exists; page: #{@page_count}/#{@total_pages} order: #{@order_count}/#{@total_orders}"
       end
     end
   end

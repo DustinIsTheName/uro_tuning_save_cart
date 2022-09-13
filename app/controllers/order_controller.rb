@@ -12,8 +12,12 @@ class OrderController < ApplicationController
       order = ShopifyOrder.new
 
       order.email = params["email"]
-      order.phone = params["customer"]["default_address"]["phone"]&.gsub(/[\s\(\)\-\+]/, "")
-      order.zip = params["customer"]["default_address"]["zip"]
+      if params["customer"]
+        if params["customer"]["default_address"]
+          order.phone = params["customer"]["default_address"]["phone"]&.gsub(/[\s\(\)\-\+]/, "")
+          order.zip = params["customer"]["default_address"]["zip"]
+        end
+      end
       order.number = params["number"]
       order.shopify_id = params["id"]
       order.order_status_url = params["order_status_url"]

@@ -26,8 +26,12 @@ class Order
         order = ShopifyOrder.new
 
         order.email = shopify_order.email
-        order.zip = shopify_order.customer.default_address.zip
-        order.phone = shopify_order.customer.default_address.phone&.gsub(/[\s\(\)\-\+]/, "")
+        if shopify_order.attributes["customer"]
+          if shopify_order.customer.attributes["default_address"]
+            order.zip = shopify_order.customer.default_address.zip
+            order.phone = shopify_order.customer.default_address.phone&.gsub(/[\s\(\)\-\+]/, "")
+          end
+        end
         order.number = shopify_order.number
         order.shopify_id = shopify_order.id
         order.order_status_url = shopify_order.order_status_url

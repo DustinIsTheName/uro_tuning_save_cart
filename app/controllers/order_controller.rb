@@ -7,7 +7,7 @@ class OrderController < ApplicationController
 
     is_presant = ShopifyOrder.find_by_number params["number"]
     if is_presant
-      puts Colorize.cyan "#{params["number"]} Already exists"
+      puts Colorize.cyan "#{params["name"]} Already exists"
     else
       order = ShopifyOrder.new
 
@@ -22,7 +22,7 @@ class OrderController < ApplicationController
       order.shopify_id = params["id"]
       order.order_status_url = params["order_status_url"]
       order.save
-      puts Colorize.green "#{params["number"]} saved"
+      puts Colorize.green "#{params["name"]} saved"
     end
 
     head :ok

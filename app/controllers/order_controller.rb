@@ -18,7 +18,7 @@ class OrderController < ApplicationController
           order.zip = params["customer"]["default_address"]["zip"]
         end
       end
-      order.number = params["number"]
+      order.number = params["name"]
       order.shopify_id = params["id"]
       order.order_status_url = params["order_status_url"]
       order.save

@@ -32,7 +32,7 @@ class Order
             order.phone = shopify_order.customer.default_address.phone&.gsub(/[\s\(\)\-\+]/, "")
           end
         end
-        order.number = shopify_order.number
+        order.number = shopify_order.name
         order.shopify_id = shopify_order.id
         order.order_status_url = shopify_order.order_status_url
         if order.save

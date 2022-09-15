@@ -2,7 +2,7 @@ class Order
 
   def self.fetch_orders
     
-    all_orders = ShopifyAPI::Order.find(:all, params: { fulfillment_status: 'any', limit: 250 })
+    all_orders = ShopifyAPI::Order.find(:all, params: { status: 'any', limit: 250 })
 
     @total_orders = ShopifyAPI::Order.count
     @total_pages = (@total_orders / 250.0).ceil

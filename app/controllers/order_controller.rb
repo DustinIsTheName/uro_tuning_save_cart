@@ -39,7 +39,7 @@ class OrderController < ApplicationController
       puts order.email
       puts order.zip
       puts order.phone
-      if order.email == params["order_email"] or order.zip == params["order_email"] or order.phone == params["order_email"]&.gsub(/[\s\(\)\-\+]/, "")
+      if order.email&.downcase == params["order_email"]&.downcase or order.zip == params["order_email"] or order.phone == params["order_email"]&.gsub(/[\s\(\)\-\+]/, "")
         order_status_url = order.order_status_url
       end
     end

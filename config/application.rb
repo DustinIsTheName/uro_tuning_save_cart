@@ -16,7 +16,7 @@ module UroTuningSaveCart
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
-    config.hosts << "35ac-98-169-39-240.ngrok.io"
+    config.hosts << "e848-2600-8806-6403-3b00-c0aa-7266-2ea-9f85.ngrok-free.app"
     config.hosts << "urotuning.herokuapp.com"
     config.hosts << "saveyourcart.urotuning.com"
     

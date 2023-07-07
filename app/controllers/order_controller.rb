@@ -3,7 +3,7 @@ class OrderController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   def new_order
-    puts params
+    # puts params
 
     is_presant = ShopifyOrder.find_by_number params["number"]
     if is_presant
@@ -30,7 +30,7 @@ class OrderController < ApplicationController
 
   def fetch_order
     headers['Access-Control-Allow-Origin'] = '*'
-    puts params
+    # puts params
 
     order = ShopifyOrder.find_by_number params["order_number"]
 
@@ -48,11 +48,81 @@ class OrderController < ApplicationController
   end
 
   def sync_orders
-    puts params
+    # puts params
 
     Order.fetch_orders
 
     render json: params
   end
 
+
+  def fulfill
+    # puts params
+
+    for line_item in params["line_items"]
+      if line_item["fulfillment_status"] == "fulfilled"
+
+        product = ShopifyAPI::Product.find line_item["product_id"]
+        if product.variants.count > 1
+          variant = product.variants.select {|v| v.id == line_item["variant_id"]}.first
+
+          variant_metafields = variant.metafields
+
+          oos = variant_metafields.select{|m| m.namespace == "global" and m.key == "OOS-Note" }.first
+          eta = variant_metafields.select{|m| m.namespace == "global" and m.key == "ETA" }.first
+
+          if oos
+            oos.destroy
+            puts Colorize.green "Variant #{oos.namespace}.#{oos.key}: #{oos.value}"
+          end
+
+          if eta
+            eta.destroy
+            puts Colorize.green "Variant #{eta.namespace}.#{eta.key}: #{eta.value}"
+          end
+        else
+          product_metafields = product.metafields
+
+          oos = product_metafields.select{|m| m.namespace == "global" and m.key == "OOS-Note" }.first
+          eta = product_metafields.select{|m| m.namespace == "global" and m.key == "ETA" }.first
+
+          if oos
+            oos.destroy
+            puts Colorize.green "Product #{oos.namespace}.#{oos.key}: #{oos.value}"
+          end
+
+          if eta
+            eta.destroy
+            puts Colorize.green "Product #{eta.namespace}.#{eta.key}: #{eta.value}"
+          end
+        end
+
+      end
+    end
+
+    head :ok
+  end
+
 end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -57,8 +57,6 @@ class OrderController < ApplicationController
 
 
   def fulfill
-    # puts params
-
     for line_item in params["line_items"]
       if line_item["fulfillment_status"] == "fulfilled"
 
@@ -74,11 +72,15 @@ class OrderController < ApplicationController
           if oos
             oos.destroy
             puts Colorize.green "Variant #{oos.namespace}.#{oos.key}: #{oos.value}"
+          else
+            puts Colorize.cyan "Variant oos not found"
           end
 
           if eta
             eta.destroy
             puts Colorize.green "Variant #{eta.namespace}.#{eta.key}: #{eta.value}"
+          else
+            puts Colorize.cyan "Variant eta not found"
           end
         else
           product_metafields = product.metafields
@@ -89,14 +91,19 @@ class OrderController < ApplicationController
           if oos
             oos.destroy
             puts Colorize.green "Product #{oos.namespace}.#{oos.key}: #{oos.value}"
+          else
+            puts Colorize.cyan "Product oos not found"
           end
 
           if eta
             eta.destroy
             puts Colorize.green "Product #{eta.namespace}.#{eta.key}: #{eta.value}"
+          else
+            puts Colorize.cyan "Product eta not found"
           end
         end
-
+      else
+        puts Colorize.cyan "fulfillment_status is #{line_item["fulfillment_status"]}"
       end
     end
 

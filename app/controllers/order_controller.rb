@@ -55,59 +55,76 @@ class OrderController < ApplicationController
     render json: params
   end
 
-
   def fulfill
     for line_item in params["line_items"]
       if line_item["fulfillment_status"] == "fulfilled"
 
-        product = ShopifyAPI::Product.find line_item["product_id"]
-        if product.variants.count > 1
-          variant = product.variants.select {|v| v.id == line_item["variant_id"]}.first
-
-          variant_metafields = variant.metafields
-
-          oos = variant_metafields.select{|m| m.namespace == "global" and m.key == "OOS-Note" }.first
-          eta = variant_metafields.select{|m| m.namespace == "global" and m.key == "ETA" }.first
-
-          if oos
-            oos.destroy
-            puts Colorize.green "Variant #{oos.namespace}.#{oos.key}: #{oos.value}"
-          else
-            puts Colorize.cyan "Variant oos not found"
-          end
-
-          if eta
-            eta.destroy
-            puts Colorize.green "Variant #{eta.namespace}.#{eta.key}: #{eta.value}"
-          else
-            puts Colorize.cyan "Variant eta not found"
-          end
-        else
-          product_metafields = product.metafields
-
-          oos = product_metafields.select{|m| m.namespace == "global" and m.key == "OOS-Note" }.first
-          eta = product_metafields.select{|m| m.namespace == "global" and m.key == "ETA" }.first
-
-          if oos
-            oos.destroy
-            puts Colorize.green "Product #{oos.namespace}.#{oos.key}: #{oos.value}"
-          else
-            puts Colorize.cyan "Product oos not found"
-          end
-
-          if eta
-            eta.destroy
-            puts Colorize.green "Product #{eta.namespace}.#{eta.key}: #{eta.value}"
-          else
-            puts Colorize.cyan "Product eta not found"
-          end
-        end
+        remove_metafields(line_item["product_id"], line_item["variant_id"])
+    
       else
         puts Colorize.cyan "fulfillment_status is #{line_item["fulfillment_status"]}"
       end
     end
 
     head :ok
+  end
+
+  def check_inventory
+
+    for variant in params["variants"]
+      if variant["inventory_quantity"] > 0
+        remove_metafields(params["id"], variant["id"])
+      else
+        puts Colorize.cyan "variant has 0 inventory"
+      end
+    end
+
+    head :ok
+  end
+
+  def remove_metafields(product_id, variant_id)
+    product = ShopifyAPI::Product.find product_id
+    if product.variants.count > 1
+      variant = product.variants.select {|v| v.id == variant_id}.first
+
+      variant_metafields = variant.metafields
+
+      oos = variant_metafields.select{|m| m.namespace == "global" and m.key == "OOS-Note" }.first
+      eta = variant_metafields.select{|m| m.namespace == "global" and m.key == "ETA" }.first
+
+      if oos
+        oos.destroy
+        puts Colorize.green "Variant #{oos.namespace}.#{oos.key}: #{oos.value}"
+      else
+        puts Colorize.cyan "Variant oos not found"
+      end
+
+      if eta
+        eta.destroy
+        puts Colorize.green "Variant #{eta.namespace}.#{eta.key}: #{eta.value}"
+      else
+        puts Colorize.cyan "Variant eta not found"
+      end
+    else
+      product_metafields = product.metafields
+
+      oos = product_metafields.select{|m| m.namespace == "global" and m.key == "OOS-Note" }.first
+      eta = product_metafields.select{|m| m.namespace == "global" and m.key == "ETA" }.first
+
+      if oos
+        oos.destroy
+        puts Colorize.green "Product #{oos.namespace}.#{oos.key}: #{oos.value}"
+      else
+        puts Colorize.cyan "Product oos not found"
+      end
+
+      if eta
+        eta.destroy
+        puts Colorize.green "Product #{eta.namespace}.#{eta.key}: #{eta.value}"
+      else
+        puts Colorize.cyan "Product eta not found"
+      end
+    end
   end
 
 end

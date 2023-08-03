@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   get '/sync-orders' => "order#sync_orders"
 
   post '/fulfill-order' => "order#fulfill"
+  post '/product-update' => "order#check_inventory"
 
   root to: 'cart#home'
 

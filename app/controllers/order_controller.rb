@@ -60,6 +60,7 @@ class OrderController < ApplicationController
       if line_item["fulfillment_status"] == "fulfilled"
 
         remove_metafields(line_item["product_id"], line_item["variant_id"])
+        remove_eta_from_ordoro_product(line_item["product_id"], line_item["variant_id"])
     
       else
         puts Colorize.cyan "fulfillment_status is #{line_item["fulfillment_status"]}"
@@ -125,6 +126,16 @@ class OrderController < ApplicationController
         puts Colorize.cyan "Product eta not found"
       end
     end
+  end
+
+  def remove_eta_from_ordoro_product(product_id, variant_id)
+    product = ShopifyAPI::Product.find product_id
+
+    variant = product.variants.select {|v| v.id == variant_id}.first
+    sku = variant.sku || variant.id
+
+    OrdoroProduct.rm_eta_from_title(sku)
+    
   end
 
 end

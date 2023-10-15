@@ -71,10 +71,10 @@ class OrderController < ApplicationController
   end
 
   def check_inventory
-
     for variant in params["variants"]
       if variant["inventory_quantity"] > 0
         remove_metafields(params["id"], variant["id"])
+        remove_eta_from_ordoro_product(params["id"], variant["id"])
       else
         puts Colorize.cyan "variant has 0 inventory"
       end
